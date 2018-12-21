@@ -1,7 +1,8 @@
 import React from 'react'
 import TextField from '@material-ui/core/TextField';
 import Styled from 'styled-components';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import { FirebaseContext } from '../Firebase';
 
 const LoginFormContainer = Styled.div`
   position: relative;
@@ -17,21 +18,43 @@ const FormElementContainer = Styled.div`
 `;
 
 export default class LoginForm extends React.Component{
+  constructor(props) {
+    super(props)
+
+    this.state= { email: '', password: ''}
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.firebase.doCreateUserWithEmailAndPassword(this.state.email, this.state.password)
+  }
+
+  onChange(event) {
+    this.setState({ [event.target.name] : event.target.value });
+  }
+
   render() {
     return (
-      <LoginFormContainer>
-        <form>
-          <FormElementContainer>
-            <TextField label="User Name" id="user-name" variant="filled" fullWidth/>
-          </FormElementContainer>
-          <FormElementContainer>
-            <TextField label="Password" id="password" variant="filled" fullWidth/>
-          </FormElementContainer>
-          <FormElementContainer>
-           <Button variant="contained" color="primary" fullWidth>LOGIN</Button>
-          </FormElementContainer>
-        </form>
-      </LoginFormContainer>
+      <FirebaseContext.Consumer>
+        {firebase => (
+          <LoginFormContainer>
+            <form onSubmit={this.onSubmit} firebase={firebase}>
+              <FormElementContainer>
+                <TextField label="Email" id="email" name="email" variant="filled" onChange={this.onChange} fullWidth/>
+              </FormElementContainer>
+              <FormElementContainer>
+                <TextField label="Password" id="password" name="password" variant="filled" onChange={this.onChange} fullWidth/>
+              </FormElementContainer>
+              <FormElementContainer>
+              <Button variant="contained" color="primary" type="submit" fullWidth>LOGIN</Button>
+              </FormElementContainer>
+            </form>
+          </LoginFormContainer> 
+        )}
+
+      </FirebaseContext.Consumer>
     )
   }
 }

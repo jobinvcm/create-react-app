@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CvpSingle from './Components/CvpSingle';
+import Firebase , { FirebaseContext } from './Components/Firebase';
 import Navigation from './Components/Navigation';
 import Users from './Pages/Users';
 import Login from './Pages/Login';
@@ -15,16 +16,18 @@ class App extends Component {
     return (
       <div className="App">
         <MuiThemeProvider theme={createMuiTheme()}>
-          <Router>
-            <div>
-              <Navigation />
-              <Switch>
-                <Route path='/user' component={Users} />>
-                <Route path='/cvp' component={CvpSingle} />
-                <Route path='/login' component={Login} />
-              </Switch>
-            </div>
-          </Router>
+          <FirebaseContext.Provider value={new Firebase()}>
+            <Router>
+              <div>
+                <Navigation />
+                <Switch>
+                  <Route path='/user' component={Users} />>
+                  <Route path='/cvp' component={CvpSingle} />
+                  <Route path='/login' component={Login} />
+                </Switch>
+              </div>
+            </Router>
+          </FirebaseContext.Provider>
         </MuiThemeProvider>
 
 
