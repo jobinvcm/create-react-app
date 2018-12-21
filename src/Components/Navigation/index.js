@@ -18,6 +18,9 @@ const Navigation = () => (
       <li>
         <Link to={ROUTES.LOGIN}>Login</Link>
       </li>
+      <li>
+        <Link to={ROUTES.DATABASE}>Database</Link>
+      </li>
 
     </ul>
   </div>

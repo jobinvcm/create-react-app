@@ -6,6 +6,7 @@ import Firebase , { FirebaseContext } from './Components/Firebase';
 import Navigation from './Components/Navigation';
 import Users from './Pages/Users';
 import Login from './Pages/Login';
+import Database from './Pages/Database';
 import logo from './logo.svg';
 import './App.css';
 
@@ -24,6 +25,7 @@ class App extends Component {
                   <Route path='/user' component={Users} />>
                   <Route path='/cvp' component={CvpSingle} />
                   <Route path='/login' component={Login} />
+                  <Route path='/database' component={Database} />
                 </Switch>
               </div>
             </Router>
