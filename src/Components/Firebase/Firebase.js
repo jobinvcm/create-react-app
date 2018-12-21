@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth'
+import 'firebase/database'
 
 var config = {
  apiKey: "AIzaSyBWaFKjSk5d54b9GgBa7YXzdWiBAYzesyU",
@@ -14,6 +15,7 @@ class Firebase {
  constructor() {
   app.initializeApp(config);
   this.auth = app.auth();
+  this.database = app.database();
  }
 
  doCreateUserWithEmailAndPassword = (email, password) => {
@@ -26,7 +28,11 @@ class Firebase {
 
  doSignOut = () => this.auth.signOut();
  
- doupdatePassword = password => this.auth.updatePassword(password);
+ doUpdatePassword = password => this.auth.updatePassword(password);
+
+ updateDatabase = (item) => {
+  return this.database.ref(`messages/${item.key}`).set(item.value)
+ };
 }
 
 export default Firebase;
